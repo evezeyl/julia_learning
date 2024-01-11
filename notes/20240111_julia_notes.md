@@ -374,3 +374,33 @@ environment = Environment(5, 100)
 precise_trebuchet = aim(imprecise_trebuchet, environment)
 shoot_distance(precise_trebuchet, environment)
 ```
+
+- then can go to create this as a module - which can be icluded and used
+- then modules can go into packages
+  See lesson for that
+  names(MyModule)
+  MyModule.some_private_function # for those that are not exported - how to use those
+
+add /path/to/package (then can say use the packages) # in packages can do that
+
+- benefit julia - very simple to create packages
+  - automatically generated from files
+
+# pycall run python in julia # eg plotting ... for plots
+
+# run julia in python
+
+using Plots
+add PyPlot
+
+For R ..
+https://cran.r-project.org/web/packages/JuliaCall/readme/README.html
+
+Julia - for algorithms - helpfull to write closer to algorithms (eg. maths symbols ...)
+
+discourse.julialang.org/ # forum
+carpentries-incubator.github.io/julia-novice/ # course
+docs.julialang.org/ # documentation
+
+Feedback form:
+nettskjema.no/a/384654
