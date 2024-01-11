@@ -1,5 +1,7 @@
 # 20140111 Julia basis
 
+Thanks to Carpentry people for this course : https://carpentries-incubator.github.io/julia-novice/aio.html
+
 ## vscode shortcut
 
 send to terminal Ctrl+Shift+P
@@ -180,13 +182,13 @@ Etterpad website - [pad.carpentries.org](https://pad.carpentries.org/Julia_DSday
 just example
 
 ```julia
-shoot_disatnce(args...)
+shoot_distance(args...)
 function shoot_distance(args...) # slurping
      Trebuchets.shoot(args...)[2] # splatting
 end
 
 
-function (wind, angle weeight)
+function (wind, angle, weight)
   Trebuchets.shoot(wind, angle, weight)[2]
 end
 
@@ -213,7 +215,6 @@ a * b #wont work if a and b are vectors
 
 ```julia
 # local statement - to be sure that variable is local than global - as in bash
-
 env = Environment(5, 100)
 trebuchet = Trebuchet(500, pi/4); # ; important to add otherwise will call the visualisations methods within 2function ... so will report an error
 #! weird I did not get an error
@@ -226,6 +227,7 @@ using macro
 @macroexpand @which size # gives which is called
 
 @time size(a) # gives time and memory when function is run
+
 @macroexpand @time size(a) # gives the code that is run
 
 @doc size # gives the doc string
@@ -259,20 +261,72 @@ trebuchet = Trebuchet(500, pi/4)
 size(trebuchet) # ok error probably did not define it
 getindex(trebuchet, 2)
 trebuchet[2]
+
+supertypes(Trebuchet) # gives the hierarchy of types
+
+using LinearAlgebra
+dot(trebuchet, trebuchet) # dot product equivalent to .*
+trebuchet + [2,2]
+trebuchet + [2,2,2] # error one by one
+trebuchet .+ 2
+trebuchet . trebuchet # did not work (missing something )
+```
+
+````
+
+```julia
+function Base.setindex!(trebuchet::Trebuchet, value, i::Int)
+  if i == 1
+    trebuchet.counterweight = value
+  elseif i == 2
+    trebuchet.release_angle = value
+  else
+    error("Trebuchet only accepts indices 1 and 2, yours is $i")
+  end
+end
+
+
+````
+
+```julia
+# need iterator because to elements
+@time size(a) shoot_distance(trebuchet)
+@time shoot_distance(trebuchet, env) # environment not defined
+```
+
+- package benchmarktools - proper time to estimate the time used to run the function
+
+```julia
+add BenchmarkTools
+@benchmark shoot_distance(trebuchet, env)
+using BenchmarkTools
+@benchmark shoot_distance(trebuchet, env)
+
+
+methods(setindex) # so basically set index - adds a method that will work with those types
+```
+
+seems to include compile time also .... runs many times ... so better estimation
+
+### Interfaces and conditionals
+
+### Loops
+
+```julia
+N = 10
+weights =[rand() * 500 for _ = 1:N]  # list comprehension
+@code_llvm rand()  # gives the detail
+
+distances = [(w, a) => shoot_distance(Trebuchet(w,a), env) for (w,a) in zip(weights, angles) ] # weight and angle pointing at shoot_distance  (some misspelling here)
 ```
 
 ```julia
+add ForwardDiff # already in Trebuchet
+using ForwardDiff: gradient 
+? gradient 
 
+function gradient(shoot_distance, trebuchet, env) # gives the gradient of the function
 ```
 
 ```julia
-
-```
-
-```julia
-
-```
-
-```julia
-
 ```
