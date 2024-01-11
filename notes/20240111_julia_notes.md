@@ -173,15 +173,92 @@ function shoot_distance(trebuchet::Trebuchet, environment::Environment) # here t
 end
 
 shoot_distance(5, angle = 0.25pi, weight = 500)
+```
+
+Etterpad website - [pad.carpentries.org](https://pad.carpentries.org/Julia_DSdays2024)
+
+just example
+
+```julia
+shoot_disatnce(args...)
+function shoot_distance(args...) # slurping
+     Trebuchets.shoot(args...)[2] # splatting
+end
+
+
+function (wind, angle weeight)
+  Trebuchets.shoot(wind, angle, weight)[2]
+end
+
+shoot_function(wind, angle, weight) = Trebuchets.shoot(wind, angle, weight)[2] # one line function
+
+# changing the arguments
+a = [1,2,3] # vector
+
+# ! convention to change the argument in jula (for mutating the argument)
+function change!(x::AbstractVector)
+  x[end] *= 2  # means that it goes through the whole vector -> seems more last index
+end
+
+change!(a) # only gave the last one
+change!(a[1:end]) ...
+# how to get achange!(a[1:end])
+a = rand(10)
+a[1:2:end] # start by 2 to the end
+a .*b #element wise multiblication
+a * b #wont work if a and b are vectors
+```
+
+- julia is first index
+
+```julia
+# local statement - to be sure that variable is local than global - as in bash
+
+env = Environment(5, 100)
+trebuchet = Trebuchet(500, pi/4); # ; important to add otherwise will call the visualisations methods within 2function ... so will report an error
+#! weird I did not get an error
+```
+
+define size
+using macro
+
+@which size ... macro that parse the julia code and tell you output (kind of write source code for your) -> gives module where size is defined
+@macroexpand @which size # gives which is called
+
+@time size(a) # gives time and memory when function is run
+@macroexpand @time size(a) # gives the code that is run
+
+@doc size # gives the doc string
+
+```julia
+function Base.size(trebuchet::Trebuchet)
+  return tuple(2) # or just write (2) - julia will understand its a tuple
+end
 
 ```
 
+search doc julia interface and conditionals
+
+- need to get the indexes and ...
+
 ```julia
+? getindex
+function  Base.getindex(trebuchet::Trebuchet, i::Int)
+  if i == 1
+    return trebuchet.counterweight
+  elseif i == 2
+    return trebuchet.release_angle
+  else
+    # throw(BoundsError(trebuchet, i))
+    error("Trebuchet only accepts indices 1 and 2m yours is $i")
+  end
+end
 
-```
-
-```julia
-
+Int # we see its a shortcut for Int64
+trebuchet = Trebuchet(500, pi/4)
+size(trebuchet) # ok error probably did not define it
+getindex(trebuchet, 2)
+trebuchet[2]
 ```
 
 ```julia
