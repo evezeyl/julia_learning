@@ -6,7 +6,6 @@ send to terminal Ctrl+Shift+P
 
 ## To do
 
-- [ ] vscode configure git email and git user
 - [ ] save workspace layout
 - [ ]
 
@@ -76,7 +75,26 @@ struct Environment
     target_distance::Float64
 end
 
+
+#
+trebuchet = Trebuchet(500, 0.25pi)
+Trebuchet
+
+environment = Environment(5, 100)
+
+# make a different type of trebuchet - hierarchy of types
+mutable struct Trebuchet <: AbstractVector{Float64}> # special type of Trebuchet with another type ---> similar to class hierarchy
+  counterweight::Float64
+  relaase_angle::Float64
+end
+
+# will give an error because a immutable (something is a constant) here - did not really understand
+# Ah yes because the definition was just as struct which is immutable
+# keyword arguments need special structure - constructor - to create new structure
+
 ```
+
+- automatically create doc strings - so ? - then the type to see how the type was defined (guves you a summary)
 
 - float types
 
@@ -91,11 +109,28 @@ typeof(1.0f0)
 - did I understood well eg. if use a supertype ? can it optimize functions for each subtype ?
 - so functions for objects that are similar but not the same
 
+Concreate and abstract types
+
 ```julia
+1.0 isa #type
+1.0 isa Real
+1.0 isa Number
+1.0 isa Float64
+1.0 isa Float32
+Float32(1.0) isa Float32
 
 ```
 
+### Environments and package manager
+
+- julia as build in env
+-
+
 ```julia
+# in pkg ]
+activate projects/trebuchet
+# can install packages that will only only be installed in this environment
+add Trebuchet
 
 ```
 
