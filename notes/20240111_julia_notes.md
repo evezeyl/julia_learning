@@ -131,13 +131,58 @@ Float32(1.0) isa Float32
 activate projects/trebuchet
 # can install packages that will only only be installed in this environment
 add Trebuchet
-
+add Trebuchet#dev
+status
+activate # not the project package
+activate projects/trebuchet
 ```
+
+import as different name
+
+```julia
+import Trebuchet as Trebuchets
+```
+
+### Functions
+
 
 ```julia
 
 ```
 
+
+
 ```julia
 
 ```
+
+
+```julia
+
+```
+
+
+```julia
+
+```
+
+
+```julia
+
+```
+
+
+```julia
+
+```
+
+
+```julia
+
+```
+
+
+```julia
+
+```
+
