@@ -145,44 +145,57 @@ import Trebuchet as Trebuchets
 
 ### Functions
 
+```julia
+names
+?names # :: keyword arg, optional when default values
+
+names(Trebuchets, all = true, imported = true) # use the imported name - separator can be , or ; BUT when define needs to be ;
+names(Trebuchets) # the ones we are supposed to use
+```
+
+aim is to launch 100 m ...
+
+```julia
+# ?
+Trebuchets.shoot
+# >
+Trebuchets.shoot(5, 025pi, 500)
+[slice]
+
+function shoot_distance(wind, angle, weight)
+  Trebuchets.shoot(wind, angle, weight)[2]
+  end
+# julia returns last line
+
+# takes the args trebuchet struc and the str environment (allows using then the previous types)
+function shoot_distance(trebuchet::Trebuchet, environment::Environment) # here that is the structures we defined
+  Trebuchets.shoot(environment.wind, trebuchet.release_angle, trebuchet.counterweight)[2] # here its the package
+end
+
+shoot_distance(5, angle = 0.25pi, weight = 500)
+
+```
 
 ```julia
 
 ```
 
+```julia
 
+```
 
 ```julia
 
 ```
 
+```julia
+
+```
 
 ```julia
 
 ```
 
-
 ```julia
 
 ```
-
-
-```julia
-
-```
-
-
-```julia
-
-```
-
-
-```julia
-
-```
-
-
-```julia
-
-```
-
