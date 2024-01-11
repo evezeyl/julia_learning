@@ -322,11 +322,55 @@ distances = [(w, a) => shoot_distance(Trebuchet(w,a), env) for (w,a) in zip(weig
 
 ```julia
 add ForwardDiff # already in Trebuchet
-using ForwardDiff: gradient 
-? gradient 
+using ForwardDiff: gradient
+? gradient
 
-function gradient(shoot_distance, trebuchet, env) # gives the gradient of the function
+function distance_from_target(trebuchet)
+  shoot_distance(env.wind, trebuchet[2], trebuchet[1]) - env.target_distance
+end
+
+grad = function gradient(shoot_distance, Trebuchet(500, 0,25pi))) # gives the gradient of the function
+
+imprecise_trebuchet = Trebuchet(500, 0.25pi)
+
+
+?
+better_trebuchet = imprecise_trebuchet - 0.05 grad # gradient descent
 ```
 
 ```julia
+# course online
+function aim(trebuchet, environment; N = 5, η = 0.05)
+           better_trebuchet = copy(trebuchet)
+           for _ in 1:N
+               grad = gradient(x -> (shoot_distance([environment.wind, x[2], x[1]])
+                                     - environment.target_distance),
+                               better_trebuchet)
+               better_trebuchet -= η * grad
+           end
+           return Trebuchet(better_trebuchet[1], better_trebuchet[2])
+       end
+```
+
+! immutable struc - cannot be updated so if used in functions eg cannot write a +=! if a is immutable ?
+Question about memory place and update - replacement variable ... (copy vs hard copy)
+
+```julia
+imprecise_trebuchet = Trebuchet(500.0, 0.25pi);
+better_trebuchet = aim(imprecise_trebuchet, env)
+```
+
+## Smarter way to store functions
+
+- store in file (cf code cleaned)
+
+```julia
+include("code_cleaned.jl")
+# look at the methods
+
+#run
+imprecise_trebuchet = Trebuchet(500.0, 0.25pi)
+environment = Environment(5, 100)
+precise_trebuchet = aim(imprecise_trebuchet, environment)
+shoot_distance(precise_trebuchet, environment)
 ```
